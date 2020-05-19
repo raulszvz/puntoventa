@@ -4,6 +4,7 @@
     <HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <div class="columns is-gapless">
       <div class="column is-two-thirds">
+        <navMenu/>
         <inventario/>
       </div>
       <div class="column is-one-third">
@@ -17,12 +18,14 @@
 //import HelloWorld from './components/HelloWorld.vue'
 import inventario from './components/inventario.vue'
 import cobrar from './components/cobrar.vue'
+import navMenu from './components/navMenu.vue'
 
 export default {
   name: 'App',
   components: {
     inventario,
-    cobrar
+    cobrar,
+    navMenu
   }
 }
 </script>

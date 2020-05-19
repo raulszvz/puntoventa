@@ -1,6 +1,6 @@
 <template>
   <div class="cobrar">
-     <span class="bd-notification is-primary">Uno</span> 
+     <span class="bd-notification is-primary"></span> 
   </div>
 </template>
 
@@ -15,8 +15,8 @@ export default {
 
 <style>
     .cobrar {
-        background-color: #00d1b2;
-        height: 100%;
+        background-color: #FFFFFF;
+        height: 100vh;
         padding: 0;
         margin: 0;
 }
