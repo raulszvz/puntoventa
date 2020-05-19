@@ -1,23 +1,24 @@
 <template>
   <div class="inventario">
     <b-carousel :autoplay="false">
-        <b-carousel-item v-for="(carousel, i) in carousels" :key="i">
-            <section :class="`hero is-fullheight is-light`">
-                <!--<div class="hero-body has-text-centered">
-                    <h1 class="title">{{carousel.text}}</h1>
-                </div>-->
+        <b-carousel-item v-for="(slide, i) in slides" :key="i">
+            <section class="hero is-fullheight is-light">
                 <div class='itemContainer'>
+                    <!--<div class="itemTitle">
+                        <h1 class="Title">Titulo</h1>
+                    </div>-->
                     <div class="columns is-multiline">
-                        <div class="column is-one-quarter" v-for="(inventario, i) in inventario" :key="i">
+                        <div class="column is-one-quarter" v-for="(items, j) in slide" :key="j">
                             <div class="card">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img src="'${inventario.image}'" alt="Placeholder image">
+                                        <img :src=items.image alt="Placeholder image">
                                     </figure>
                                 </div>
                                 <div class="card-content">
-                                    <div class="content">
-                                        {{inventario.text}}
+                                    <div class="content textFormat">
+                                        <b>{{items.product}}</b><br>
+                                        ${{items.price}}
                                     </div>
                                 </div>
                             </div>
@@ -35,20 +36,18 @@ export default {
   name: 'inventario',
   data(){
         return {
-            carousels: [
-                { text: 'Slide 1', color: 'primary' },
-                { text: 'Slide 2', color: 'info' },
-                { text: 'Slide 3', color: 'success' },
-                { text: 'Slide 4', color: 'warning' },
-                { text: 'Slide 5', color: 'danger' }
+            slides: [
+                [
+                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 1', price: '23.50' },
+                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 2', price: '23.50' },
+                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 3', price: '23.50' }
+                ],
+                [
+                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 4', price: '23.50' },
+                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 5', price: '23.50' }
+                ]
+                
             ],
-            inventario: [
-                { image: 'https://bulma.io/images/placeholders/1280x960.png', text: 'Producto 1' },
-                { image: 'https://bulma.io/images/placeholders/1280x960.png', text: 'Producto 2' },
-                { image: 'https://bulma.io/images/placeholders/1280x960.png', text: 'Producto 3' },
-                { image: 'https://bulma.io/images/placeholders/1280x960.png', text: 'Producto 4' },
-                { image: 'https://bulma.io/images/placeholders/1280x960.png', text: 'Producto 5' }
-            ]
         }
     }
 }
@@ -63,10 +62,13 @@ export default {
         padding: 0;
         margin: 0;
     }
+    .itemTitle{
+        padding: 1%;
+    }
     .itemContainer{
         padding: 5%;
-      /*justify-content: center;
-      align-items: center;*/
-
+    }
+    .textFormat{
+        text-align: center;
     }
 </style>
