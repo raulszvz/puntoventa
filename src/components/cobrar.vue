@@ -1,12 +1,17 @@
 <template>
   <div class="cobrar">
-     <span class="bd-notification is-primary"></span> 
+    <navCobrar/>
   </div>
 </template>
 
 <script>
+import navCobrar from './../components/navCobrar.vue'
+
 export default {
   name: 'cobrar',
+  components: {
+    navCobrar
+  },
   props: {
 
   }
@@ -19,5 +24,5 @@ export default {
         height: 100vh;
         padding: 0;
         margin: 0;
-}
+    }
 </style>

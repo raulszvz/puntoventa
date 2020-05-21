@@ -4,10 +4,10 @@
     <HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <div class="columns is-gapless">
       <div class="column is-two-thirds">
-        <navMenu/>
+        <navInventario/>
         <inventario/>
       </div>
-      <div class="column is-one-third">
+      <div class="column is-one-third">    
         <cobrar/>
       </div>
     </div>
@@ -18,25 +18,18 @@
 //import HelloWorld from './components/HelloWorld.vue'
 import inventario from './components/inventario.vue'
 import cobrar from './components/cobrar.vue'
-import navMenu from './components/navMenu.vue'
+import navInventario from './components/navInventario.vue'
 
 export default {
   name: 'App',
   components: {
     inventario,
     cobrar,
-    navMenu
+    navInventario,
   }
 }
 </script>
 
 <style>
-/*#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}*/
+
 </style>

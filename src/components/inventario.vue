@@ -10,7 +10,7 @@
                     <div class="columns is-multiline">
                         <div class="column is-one-quarter" v-for="(items, j) in slide" :key="j">
                             <div class="card">
-                                <div class="card-image">
+                                <div class="card-image" @click="isComponentModalActive = true">
                                     <figure class="image is-4by3">
                                         <img :src=items.image alt="Placeholder image">
                                     </figure>
@@ -25,6 +25,13 @@
                         </div>
                     </div>
                 </div>
+                <b-modal :active.sync="isComponentModalActive"
+                    trap-focus
+                    :destroy-on-hide="false"
+                    aria-role="dialog"
+                    aria-modal>
+                    <detallesProducto/>
+                </b-modal>
             </section>
         </b-carousel-item>
     </b-carousel>
@@ -32,8 +39,12 @@
 </template>
 
 <script>
+import detallesProducto from './../components/detallesProducto.vue'
 export default {
   name: 'inventario',
+  components: {
+    detallesProducto
+  },
   data(){
         return {
             slides: [
@@ -46,8 +57,8 @@ export default {
                     { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 4', price: '23.50' },
                     { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 5', price: '23.50' }
                 ]
-                
             ],
+            isComponentModalActive: false,
         }
     }
 }
@@ -70,5 +81,10 @@ export default {
     }
     .textFormat{
         text-align: center;
+    }
+    .detallesProducto{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
