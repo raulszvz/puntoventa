@@ -10,7 +10,9 @@
   "dependencies": {
     "@mdi/font": "^5.2.45",
     "buefy": "^0.8.15",
+    "canvas": "^2.6.1",
     "core-js": "^3.6.4",
+    "jsbarcode": "^3.11.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
