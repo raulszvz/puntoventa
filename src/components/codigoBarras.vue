@@ -11,7 +11,9 @@
               <!--figure class="image">
                 <img src="https://s3-eu-west-1.amazonaws.com/js-barcode/barcodes/init.svg" alt="Image">
               </figure>-->
-              <svg id="barcode"></svg>
+              <barcode v-bind:value=producto.id>
+                Show this if the rendering fails.
+              </barcode>
             </div>
             <nav class="level is-mobile">
               <div class="level-left">
@@ -31,36 +33,25 @@
 </template>
 
 <script>
-import jsbarcode from 'jsbarcode';
-//import Canvas from 'canvas';
+import VueBarcode from 'vue-barcode';
 
 export default {
   name: 'codigoBarras',
+  components: {
+    'barcode': VueBarcode
+  },
   props: {
 
   },
   data(){
         return {
             productos: [
-                {img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 1', precio:'23.50'},
-                {img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 2', precio:'37.50'},
-                {img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 3', precio:'41.00'},
+                {id:"12345", img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 1', precio:'23.50'},
+                {id:"12346", img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 2', precio:'37.50'},
+                {id:"12347", img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 3', precio:'41.00'},
             ],
         }
   },
-  methods:{
-    barcodeGenerate(){
-      //var canvas = new Canvas();
-      //jsbarcode(canvas, "Hello");
-      jsbarcode("#barcode", "1234", {
-        format: "pharmacode",
-        lineColor: "#0aa",
-        width: 4,
-        height: 40,
-        displayValue: false
-      });
-    }
-  }
 }
 </script>
 
