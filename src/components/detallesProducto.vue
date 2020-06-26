@@ -42,13 +42,21 @@
 export default {
   name: 'detallesPoducto',
   props: {
-
+    producto: Object
   },
   data(){
         return {
-            producto: 
+            productos: 
                 { id: '123', modelo: 'Modelo A', marca: 'Marca C', tipo: 'Blazer', talla: 'S', descripcion: 'Prenda de vestir', precio: '100', existencias: '6', imgURL: 'https://bulma.io/images/placeholders/1280x960.png'}
         }
+  },
+  created(){
+    this.printTest();
+  },
+  methods: {
+    printTest(){
+      console.log(this.producto);
+    }
   }
 }
 </script>

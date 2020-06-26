@@ -29,12 +29,40 @@
             </nav>
           </div>
         </article>
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+                <section class="subContainer">
+            <strong>Agregar cliente</strong>
+            <b-field>
+                <b-input placeholder="Nombre" v-model="cliente.nombre"></b-input>
+            </b-field>
+            <b-field>
+                <b-datepicker placeholder="Fecha de nacimiento" v-model="cliente.fecha_nacimiento" icon="calendar-today" trap-focus></b-datepicker>
+            </b-field>
+            <b-field>
+                <b-input placeholder="Email" v-model="cliente.email" type="email"></b-input>
+            </b-field>
+            <b-field>
+                <b-input placeholder="Telefono" v-model="cliente.telefono" type="number">
+            </b-input>
+            </b-field>
+            <b-field>
+                <b-button type="is-primary" @click="createDoc">Guardar</b-button>
+            </b-field>
+        </section>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+const shortid = require('shortid');
+const axios = require('axios');
+
 export default {
   name: 'clientes',
   props: {
@@ -42,12 +70,39 @@ export default {
   },
   data(){
         return {
-            clientes: [
-                {id:12345, nombre:"John Smith", email:"john@email.com", puntos:50, img: ""},
-                {id:12346, nombre:"Jane Cox", email:"jane@email.com", puntos:40, img: ""},
-                {id:12347, nombre:"Adam Levine", email:"adam@email.com", puntos:70, img: ""},
-            ],
+            cliente:{ id:'', nombre: '', fecha_nacimiento: '', email:'', telefono:'', fotoURL:''},
+            clientes: []
         }
+    },
+  created(){
+    this.readDoc();
+  },
+  methods: {
+    async createDoc(){
+            axios.post('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/create/cliente', {
+            id: shortid.generate(), 
+            nombre: this.cliente.nombre, 
+            fecha_nacimiento: this.cliente.fecha_nacimiento, 
+            email: this.cliente.email, 
+            telefono: this.cliente.telefono,
+            fotoURL:'https://bulma.io/images/placeholders/1280x960.png'
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    },
+    async readDoc() {
+            try {
+                let response = await axios.get('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/read/cliente');
+                this.clientes = response.data;
+                console.log(this.clientes);
+            } catch (error) {
+                console.error(error);
+            }
+        },
   }
 }
 </script>

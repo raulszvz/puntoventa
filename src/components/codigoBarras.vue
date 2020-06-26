@@ -4,7 +4,7 @@
        <div class="box">
         <article class="media" v-for="(producto, i) in productos" :key="i">
           <div class="media-left">
-            <strong>{{producto.producto}}</strong>
+            <strong>{{producto.modelo}}</strong>
           </div>
           <div class="media-content">
             <div class="content">
@@ -34,6 +34,7 @@
 
 <script>
 import VueBarcode from 'vue-barcode';
+const axios = require('axios');
 
 export default {
   name: 'codigoBarras',
@@ -45,13 +46,28 @@ export default {
   },
   data(){
         return {
-            productos: [
+            producto: [
                 {id:"12345", img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 1', precio:'23.50'},
                 {id:"12346", img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 2', precio:'37.50'},
                 {id:"12347", img:'https://bulma.io/images/placeholders/1280x960.png', producto:'Producto 3', precio:'41.00'},
             ],
+            productos: []
         }
   },
+  created(){
+        this.readDoc();
+    },
+    methods:{
+        async readDoc() {
+            try {
+                let response = await axios.get('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/read/producto');
+                this.productos = response.data;
+                console.log(this.productos);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+    },
 }
 </script>
 

@@ -1,45 +1,41 @@
 <template>
   <div class="inventario">
-    <b-carousel :autoplay="false">
-        <b-carousel-item v-for="(slide, i) in slides" :key="i">
             <section class="hero is-fullheight is-light">
                 <div class='itemContainer'>
-                    <!--<div class="itemTitle">
-                        <h1 class="Title">Titulo</h1>
-                    </div>-->
                     <div class="columns is-multiline">
-                        <div class="column is-one-quarter" v-for="(items, j) in slide" :key="j">
+                        <div class="column is-one-quarter" v-for="(item, j) in productos" :key="j">
                             <div class="card">
                                 <div class="card-image" @click="isComponentModalActive = true">
                                     <figure class="image is-4by3">
-                                        <img :src=items.image alt="Placeholder image">
+                                        <img :src=item.imgURL alt="Placeholder image">
                                     </figure>
                                 </div>
                                 <div class="card-content">
                                     <div class="content textFormat">
-                                        <b>{{items.product}}</b><br>
-                                        ${{items.price}}
+                                        <b>{{item.modelo}}</b><br>
+                                        ${{item.precio}}
                                     </div>
+                                    <button class="button is-primary" @click="verificarCarrito">Agregar</button>
                                 </div>
                             </div>
+                            <b-modal :active.sync="isComponentModalActive"
+                                trap-focus
+                                :destroy-on-hide="false"
+                                aria-role="dialog"
+                                aria-modal>
+                                <detallesProducto :producto='item'/>
+                            </b-modal>
                         </div>
                     </div>
                 </div>
-                <b-modal :active.sync="isComponentModalActive"
-                    trap-focus
-                    :destroy-on-hide="false"
-                    aria-role="dialog"
-                    aria-modal>
-                    <detallesProducto/>
-                </b-modal>
             </section>
-        </b-carousel-item>
-    </b-carousel>
   </div>
 </template>
 
 <script>
 import detallesProducto from './../components/detallesProducto.vue'
+const axios = require('axios');
+
 export default {
   name: 'inventario',
   components: {
@@ -47,20 +43,67 @@ export default {
   },
   data(){
         return {
-            slides: [
-                [
-                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 1', price: '23.50' },
-                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 2', price: '23.50' },
-                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 3', price: '23.50' }
-                ],
-                [
-                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 4', price: '23.50' },
-                    { image: 'https://bulma.io/images/placeholders/1280x960.png', product: 'Producto 5', price: '23.50' }
-                ]
-            ],
+            id: 'ABC', 
+            productos: [],
+            compras: [],
+            contador: 0,
             isComponentModalActive: false,
         }
-    }
+    },
+    created(){
+        this.readDoc();
+    },
+    methods:{
+        async readDoc() {
+            try {
+                let response = await axios.get('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/read/producto');
+                this.productos = response.data;
+                console.log(this.productos);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async verificarCarrito() {
+            try {
+                let response = await axios.get('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/read/carrito/'+this.id);
+                let onlyData = response.data;
+                console.log(response.data);
+                if(onlyData.id == this.id){
+                    console.log('si');
+                    this.contador = onlyData.length
+                    this.agregarCarrito();
+                }else{
+                    console.log('no');
+                    this.iniciarCarrito();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async iniciarCarrito() {
+                axios.post('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/create/carrito', {
+                    id: this.id,
+                })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        async agregarCarrito() {
+                //let articuloNum = toString('articulo'+this.contador);
+                axios.put('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/update/carrito/'+this.id,{
+                    articuloNum:'cosa'
+                })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+    },  
 }
 </script>
 
