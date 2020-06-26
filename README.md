@@ -1,5 +1,9 @@
 # puntoventa
 
+## Raúl Sánchez Vázquez
+### Ingenieria en Computación Inteligente
+### Materia SPA
+
 ## Project setup
 ```
 npm install

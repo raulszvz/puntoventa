@@ -93,7 +93,23 @@ export default {
         .catch(function (error) {
             console.log(error);
         });
-    }
+        this.letreroRespuesta();
+    },
+    letreroRespuesta(){
+      this.$buefy.snackbar.open({
+        message: 'Producto guardado',
+        type: 'is-warning',
+        position: 'is-top',
+        actionText: 'OK',
+        indefinite: true,
+        onAction: () => {
+          this.$buefy.toast.open({
+            message: 'Action pressed',
+            queue: false
+          })
+        }
+      })
+    },
   }
 }
 </script>

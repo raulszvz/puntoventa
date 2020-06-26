@@ -93,6 +93,7 @@ export default {
         .catch(function (error) {
             console.log(error);
         });
+        this.letreroRespuesta()
     },
     async readDoc() {
             try {
@@ -103,6 +104,21 @@ export default {
                 console.error(error);
             }
         },
+    letreroRespuesta(){
+      this.$buefy.snackbar.open({
+        message: 'Cliente agregado',
+        type: 'is-warning',
+        position: 'is-top',
+        actionText: 'OK',
+        indefinite: true,
+        onAction: () => {
+          this.$buefy.toast.open({
+            message: 'Action pressed',
+            queue: false
+          })
+        }
+      })
+    },
   }
 }
 </script>

@@ -15,7 +15,7 @@
                                         <b>{{item.modelo}}</b><br>
                                         ${{item.precio}}
                                     </div>
-                                    <button class="button is-primary" @click="verificarCarrito">Agregar</button>
+                                    <button class="button is-primary" @click="verificarCarrito(item)">Agregar</button>
                                 </div>
                             </div>
                             <b-modal :active.sync="isComponentModalActive"
@@ -44,6 +44,7 @@ export default {
   data(){
         return {
             id: 'ABC', 
+            item: '',
             productos: [],
             compras: [],
             contador: 0,
@@ -58,22 +59,24 @@ export default {
             try {
                 let response = await axios.get('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/read/producto');
                 this.productos = response.data;
-                console.log(this.productos);
+                //console.log(this.productos);
             } catch (error) {
                 console.error(error);
             }
         },
-        async verificarCarrito() {
+        async verificarCarrito(item) {
             try {
+                this.itemAux = item
+                //console.log(this.itemAux);
                 let response = await axios.get('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/read/carrito/'+this.id);
                 let onlyData = response.data;
-                console.log(response.data);
+                //console.log(response.data);
                 if(onlyData.id == this.id){
-                    console.log('si');
-                    this.contador = onlyData.length
+                    //console.log('si');
+                    this.contador = Object.keys(onlyData).length
                     this.agregarCarrito();
                 }else{
-                    console.log('no');
+                    //console.log('no');
                     this.iniciarCarrito();
                 }
             } catch (error) {
@@ -81,8 +84,9 @@ export default {
             }
         },
         async iniciarCarrito() {
-                axios.post('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/create/carrito', {
+                axios.post('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/create/carrito/', {
                     id: this.id,
+                    articulo1: this.itemAux
                 })
                 .then(function (response) {
                     console.log(response);
@@ -92,10 +96,12 @@ export default {
                 });
         },
         async agregarCarrito() {
-                //let articuloNum = toString('articulo'+this.contador);
-                axios.put('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/update/carrito/'+this.id,{
-                    articuloNum:'cosa'
-                })
+                let variable = "articulo"+this.contador.toString();
+                let articuloNum = JSON.parse('{"'+variable+'":'+JSON.stringify(this.itemAux)+'}');
+                //console.log(articuloNum);
+                axios.put('https://us-central1-sweetjazmin-api.cloudfunctions.net/app/api/update/carrito/'+this.id,
+                    articuloNum
+                )
                 .then(function (response) {
                     console.log(response);
                 })
