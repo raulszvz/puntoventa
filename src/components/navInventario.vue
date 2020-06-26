@@ -53,7 +53,7 @@
         </template>
         <template slot="end">
             <b-navbar-item tag="div">
-                <b-button class="is-light"><b-icon icon="github"></b-icon></b-button>
+                <b-button class="is-light" @click="abrirEnlace"><b-icon icon="github"></b-icon></b-button>
             </b-navbar-item>
         </template>
     </b-navbar>
@@ -80,6 +80,11 @@ export default {
             modalClientes: false,
             modalCodigoBarras: false,
             modalNuevoProducto: false,
+        }
+    },
+    methods:{
+        abrirEnlace(){
+            window.open("https://github.com/raulszvz/puntoventa");
         }
     }
 }
